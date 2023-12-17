@@ -1,6 +1,4 @@
 import org.junit.jupiter.api.Test;
-import puzzle4.Game;
-import puzzle4.Puzzle4;
 import puzzle5.GardenMap;
 import puzzle5.Puzzle5;
 
@@ -18,10 +16,10 @@ class Puzzle5Test {
 
         GardenMap gardenMap = Puzzle5.readTokens(inputFile);
 
-        assertEquals("82", gardenMap.getSeedToLocation("79"));
-        assertEquals("43", gardenMap.getSeedToLocation("14"));
-        assertEquals("86", gardenMap.getSeedToLocation("55"));
-        assertEquals("35", gardenMap.getSeedToLocation("13"));
+        assertEquals(82, gardenMap.getSeedToLocation(79));
+        assertEquals(43, gardenMap.getSeedToLocation(14));
+        assertEquals(86, gardenMap.getSeedToLocation(55));
+        assertEquals(35, gardenMap.getSeedToLocation(13));
     }
 
     @Test
@@ -32,12 +30,10 @@ class Puzzle5Test {
 
         long min = gardenMap.seeds().stream()
                 .map(gardenMap::getSeedToLocation)
-                .map(Long::parseLong)
                 .min(Comparator.naturalOrder())
                 .orElse(-1L);
 
-        System.out.println(min);
-        //assertEquals(35, gardenMap.getSeedToLocation(13));
+        assertEquals(486613012, min);
     }
 
 }

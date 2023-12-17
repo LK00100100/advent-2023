@@ -1,41 +1,60 @@
 package puzzle5;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public record GardenMap(
         //source -> destination
-        Set<String> seeds,
-        Map<String, String> seedToSoil,
-        Map<String, String> soilToFertilizer,
-        Map<String, String> fertilizerToWater,
-        Map<String, String> waterToLight,
-        Map<String, String> lightToTemperature,
-        Map<String, String> temperatureToHumidity,
-        Map<String, String> humidityToLocation
+
+        Set<Long> seeds,
+        List<SrcDstAmount> seedToSoil,
+        List<SrcDstAmount> soilToFertilizer,
+        List<SrcDstAmount> fertilizerToWater,
+        List<SrcDstAmount> waterToLight,
+        List<SrcDstAmount> lightToTemperature,
+        List<SrcDstAmount> temperatureToHumidity,
+        List<SrcDstAmount> humidityToLocation
 ) {
 
     public static GardenMap create() {
         return new GardenMap(new HashSet<>(),
-                new HashMap<>(),
-                new HashMap<>(),
-                new HashMap<>(),
-                new HashMap<>(),
-                new HashMap<>(),
-                new HashMap<>(),
-                new HashMap<>());
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>());
     }
 
-    public String getSeedToLocation(String seed) {
-        var toSoil = seedToSoil.getOrDefault(seed, seed);
-        var toFertilizer = soilToFertilizer.getOrDefault(toSoil, toSoil);
-        var toWater = fertilizerToWater.getOrDefault(toFertilizer, toFertilizer);
-        var toLight = waterToLight.getOrDefault(toWater, toWater);
-        var toTemperature = lightToTemperature.getOrDefault(toLight, toLight);
-        var toHumidity = temperatureToHumidity.getOrDefault(toTemperature, toTemperature);
+    //thought, could use some sort of interval tree...
+    public long getSeedToLocation(long seed) {
+        var toSoil = getOrDefault(seedToSoil, seed);
+        var toFertilizer = getOrDefault(soilToFertilizer, toSoil);
+        var toWater = getOrDefault(fertilizerToWater, toFertilizer);
+        var toLight = getOrDefault(waterToLight, toWater);
+        var toTemperature = getOrDefault(lightToTemperature, toLight);
+        var toHumidity = getOrDefault(temperatureToHumidity, toTemperature);
 
-        return humidityToLocation.getOrDefault(toHumidity, toHumidity);
+        return getOrDefault(humidityToLocation, toHumidity);
+    }
+
+    /**
+     * defaults to src
+     * @param records -
+     * @param source -
+     * @return -
+     */
+    private long getOrDefault(List<SrcDstAmount> records, long source) {
+        for(var record : records) {
+            if(source < record.source() || source >= record.source() + record.amount()) {
+                continue;
+            }
+
+            long diffSource = source - record.source();
+
+            return record.destination() + diffSource;
+        }
+
+        return source;
     }
 }
