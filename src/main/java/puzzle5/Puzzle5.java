@@ -4,16 +4,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.LongStream;
 
 public class Puzzle5 {
 
+    public static GardenMap readTokens(File file) throws FileNotFoundException {
+        return readTokens(file, false);
+    }
+
     /**
-     * /**
+     * part2Mode parses seeds for part2
      *
      * @param file assume valid
      * @return list of rows
      */
-    public static GardenMap readTokens(File file) throws FileNotFoundException {
+    public static GardenMap readTokens(File file, boolean part2Mode) throws FileNotFoundException {
         GardenMap gardenMap = GardenMap.create();
 
         Consumer<SrcDstAmount> srcDstfunc = (a) -> {
@@ -31,6 +36,21 @@ public class Puzzle5 {
 
             //set parsing mode
             if (line.contains("seeds:")) {
+                if(part2Mode) {
+                    int colonIdx = line.indexOf(':');
+                    String[] seeds = line.substring(colonIdx + 2).split(" ");
+
+                    //seed + range
+                    for(int i = 0; i < seeds.length; i += 2) {
+                        long seed = Long.parseLong(seeds[i]);
+                        long range = Long.parseLong(seeds[i + 1]);
+
+                        gardenMap.seedRange().add(new SeedRange(seed, range));
+                    }
+
+                    continue;
+                }
+
                 int colonIdx = line.indexOf(':');
                 String[] seeds = line.substring(colonIdx + 2).split(" ");
                 Arrays.stream(seeds)

@@ -5,6 +5,7 @@ import puzzle5.Puzzle5;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.stream.LongStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,6 +31,23 @@ class Puzzle5Test {
 
         long min = gardenMap.seeds().stream()
                 .map(gardenMap::getSeedToLocation)
+                .min(Comparator.naturalOrder())
+                .orElse(-1L);
+
+        assertEquals(486613012, min);
+    }
+
+    @Test
+    void solvePart2() throws FileNotFoundException {
+        File inputFile = new File(Objects.requireNonNull(this.getClass().getResource("puzzle5.txt")).getFile());
+
+        GardenMap gardenMap = Puzzle5.readTokens(inputFile, true);
+
+        long min = gardenMap.seedRange().stream()
+                .flatMap(sr -> LongStream.range(0, sr.range())
+                        .map(r -> sr.seedStart() + r)
+                        .map(gardenMap::getSeedToLocation)
+                        .boxed())
                 .min(Comparator.naturalOrder())
                 .orElse(-1L);
 

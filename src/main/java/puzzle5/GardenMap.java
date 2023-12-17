@@ -3,9 +3,8 @@ package puzzle5;
 import java.util.*;
 
 public record GardenMap(
-        //source -> destination
-
         Set<Long> seeds,
+        List<SeedRange> seedRange,
         List<SrcDstAmount> seedToSoil,
         List<SrcDstAmount> soilToFertilizer,
         List<SrcDstAmount> fertilizerToWater,
@@ -23,11 +22,13 @@ public record GardenMap(
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),
+                new ArrayList<>(),
                 new ArrayList<>());
     }
 
     //thought, could use some sort of interval tree...
     public long getSeedToLocation(long seed) {
+        System.out.println("seed: " + seed);
         var toSoil = getOrDefault(seedToSoil, seed);
         var toFertilizer = getOrDefault(soilToFertilizer, toSoil);
         var toWater = getOrDefault(fertilizerToWater, toFertilizer);
