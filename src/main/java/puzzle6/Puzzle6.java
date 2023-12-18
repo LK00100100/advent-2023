@@ -10,7 +10,7 @@ public class Puzzle6 {
 
     /**
      * @param file assume valid
-     * @return list of rows
+     * @return -
      */
     public static List<RaceInfo> readTokens(File file) throws FileNotFoundException {
         List<RaceInfo> races = new ArrayList<>();
