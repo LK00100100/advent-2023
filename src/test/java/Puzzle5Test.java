@@ -43,15 +43,14 @@ class Puzzle5Test {
 
         GardenMap gardenMap = Puzzle5.readTokens(inputFile, true);
 
-        long min = gardenMap.seedRange().stream()
-                .flatMap(sr -> LongStream.range(0, sr.range())
-                        .map(r -> sr.seedStart() + r)
-                        .map(gardenMap::getSeedToLocation)
-                        .boxed())
-                .min(Comparator.naturalOrder())
-                .orElse(-1L);
+        long min = Long.MAX_VALUE;
+        for(var sr : gardenMap.seedRange()) {
+            for(int r = 0; r < sr.range(); r++) {
+                min = Math.min(min, gardenMap.getSeedToLocation(sr.seedStart() + r));
+            }
+        }
 
-        assertEquals(486613012, min);
+        assertEquals(56931769, min);
     }
 
 }

@@ -28,7 +28,6 @@ public record GardenMap(
 
     //thought, could use some sort of interval tree...
     public long getSeedToLocation(long seed) {
-        System.out.println("seed: " + seed);
         var toSoil = getOrDefault(seedToSoil, seed);
         var toFertilizer = getOrDefault(soilToFertilizer, toSoil);
         var toWater = getOrDefault(fertilizerToWater, toFertilizer);
