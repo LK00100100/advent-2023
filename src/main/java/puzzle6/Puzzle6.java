@@ -32,8 +32,8 @@ public class Puzzle6 {
 
         //assumed same length
         for(int i = 0; i < timesArr.length; i++) {
-            int time = Integer.parseInt(timesArr[i]);
-            int distance = Integer.parseInt(distanceArr[i]);
+            long time = Long.parseLong(timesArr[i]);
+            long distance = Long.parseLong(distanceArr[i]);
 
             races.add(new RaceInfo(time, distance));
         }

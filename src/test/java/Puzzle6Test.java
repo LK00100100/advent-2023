@@ -17,7 +17,9 @@ class Puzzle6Test {
 
         var races = Puzzle6.readTokens(inputFile);
 
-        int answer = races.stream().map(RaceInfo::numWaysToBeat).reduce((a, b) -> a * b).orElse(0);
+        long answer = races.stream().map(RaceInfo::numWaysToBeat)
+                .reduce((a, b) -> a * b)
+                .orElse(0L);
 
         assertEquals(288, answer);
     }
@@ -28,9 +30,24 @@ class Puzzle6Test {
 
         var races = Puzzle6.readTokens(inputFile);
 
-        int answer = races.stream().map(RaceInfo::numWaysToBeat).reduce((a, b) -> a * b).orElse(0);
+        long answer = races.stream().map(RaceInfo::numWaysToBeat)
+                .reduce((a, b) -> a * b)
+                .orElse(0L);
 
         assertEquals(440000, answer);
+    }
+
+    @Test
+    void solvePart2() throws FileNotFoundException {
+        File inputFile = new File(Objects.requireNonNull(this.getClass().getResource("puzzle6-2.txt")).getFile());
+
+        var races = Puzzle6.readTokens(inputFile);
+
+        long answer = races.stream().map(RaceInfo::numWaysToBeat)
+                .reduce((a, b) -> a * b)
+                .orElse(0L);
+
+        assertEquals(26187338, answer);
     }
 
 }
