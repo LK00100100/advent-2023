@@ -42,4 +42,36 @@ class Puzzle7Test {
         assertEquals(246795406, total);
     }
 
+    @Test
+    void solvePart2Sample() throws FileNotFoundException {
+        File inputFile = new File(Objects.requireNonNull(this.getClass().getResource("puzzle7-sample.txt")).getFile());
+
+        var handBets = Puzzle7.readTokens(inputFile);
+        handBets.sort(HandBet::compareToWithJoker);
+
+        //sum it up
+        int total = 0;
+        for (int rank = 1; rank <= handBets.size(); rank++) {
+            total += rank * handBets.get(rank - 1).bet();
+        }
+
+        assertEquals(5905, total);
+    }
+
+    @Test
+    void solvePart2() throws FileNotFoundException {
+        File inputFile = new File(Objects.requireNonNull(this.getClass().getResource("puzzle7.txt")).getFile());
+
+        var handBets = Puzzle7.readTokens(inputFile);
+        handBets.sort(HandBet::compareToWithJoker);
+
+        //sum it up
+        int total = 0;
+        for (int rank = 1; rank <= handBets.size(); rank++) {
+            total += rank * handBets.get(rank - 1).bet();
+        }
+
+        assertEquals(249356515, total);
+    }
+
 }
