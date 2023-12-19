@@ -1,0 +1,32 @@
+import org.junit.jupiter.api.Test;
+import puzzle7.HandBet;
+import puzzle7.Puzzle7;
+import puzzle8.Puzzle8;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Objects;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class Puzzle8Test {
+
+    @Test
+    void solvePartSample() throws FileNotFoundException {
+        File inputFile = new File(Objects.requireNonNull(this.getClass().getResource("puzzle8-sample.txt")).getFile());
+
+        var network = Puzzle8.readTokens(inputFile);
+
+        assertEquals(6, network.countStepsFromAAAToZZZ());
+    }
+
+    @Test
+    void solvePart1() throws FileNotFoundException {
+        File inputFile = new File(Objects.requireNonNull(this.getClass().getResource("puzzle8.txt")).getFile());
+
+        var network = Puzzle8.readTokens(inputFile);
+
+        assertEquals(18673, network.countStepsFromAAAToZZZ());
+    }
+
+}
