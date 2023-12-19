@@ -1,6 +1,4 @@
 import org.junit.jupiter.api.Test;
-import puzzle7.HandBet;
-import puzzle7.Puzzle7;
 import puzzle8.Puzzle8;
 
 import java.io.File;
@@ -27,6 +25,23 @@ class Puzzle8Test {
         var network = Puzzle8.readTokens(inputFile);
 
         assertEquals(18673, network.countStepsFromAAAToZZZ());
+    }
+
+    @Test
+    void solvePart2Sample() throws FileNotFoundException {
+        File inputFile = new File(Objects.requireNonNull(this.getClass().getResource("puzzle8-2-sample.txt")).getFile());
+
+        var network = Puzzle8.readTokens(inputFile);
+
+        assertEquals(6, network.getNumStepsFromEndingAtoAllEndingZ());
+    }
+    @Test
+    void solvePart2() throws FileNotFoundException {
+        File inputFile = new File(Objects.requireNonNull(this.getClass().getResource("puzzle8.txt")).getFile());
+
+        var network = Puzzle8.readTokens(inputFile);
+
+        assertEquals(6, network.getNumStepsFromEndingAtoAllEndingZ());
     }
 
 }

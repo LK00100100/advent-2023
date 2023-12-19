@@ -1,7 +1,5 @@
 package puzzle8;
 
-import puzzle7.HandBet;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
