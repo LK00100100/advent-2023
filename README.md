@@ -1,4 +1,4 @@
-# advent-2022
+# advent-2023
 by LK00100100
 
 My "Advent of Code" solutions for 2023
